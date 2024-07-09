@@ -21,16 +21,6 @@ io.on("connection", (socket) => {
     console.log(username);
   });
 
-  socket.on("tracer", (username) => {
-    io.emit("tracer", username);
-    console.log(username);
-  });
-
-  socket.on("tracerOff", (username) => {
-    io.emit("tracerOff", username);
-    console.log(username);
-  });
-
   socket.on("location", (location) => {
     io.emit("location", location);
     console.log(location);
