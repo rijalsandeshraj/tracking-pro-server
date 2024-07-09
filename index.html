@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TrackerPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <h1 class="font-bold text-green-500 text-3xl text-center mt-5">
+      TrackerPro
+    </h1>
+    <div>
+      <h2 class="font-semibold text-xl text-center mt-5">
+        Project for tracking location info of multiple users
+      </h2>
+    </div>
+    <div>
+      <h3 class="font-bold text-xl text-center mt-5" id="availability">
+        No Users are Active
+      </h3>
+    </div>
+    <div
+      class="flex flex-col justify-center items-center mt-5"
+      id="locationData"
+    ></div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let socket = io();
+    let availability = document.getElementById("availability");
+    let locationData = document.getElementById("locationData");
+    let usersCount = 0;
+
+    socket.on("addUser", (user) => {
+      let name = document.createElement("p");
+      name.style.backgroundColor = "rgb(34, 169, 38)";
+      name.style.width = "100%";
+      name.style.textAlign = "center";
+      name.style.color = "white";
+      name.textContent = "User : " + user + " is active";
+      usersCount++;
+      availability.innerHTML = usersCount + " User(s) Active";
+      locationData.appendChild(name);
+      let spacer = document.createElement("p");
+      spacer.style.height = "2px";
+      spacer.style.width = "100%";
+      spacer.textContent = "\n";
+      locationData.appendChild(spacer);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on("removeUser", (user) => {
+      let name = document.createElement("p");
+      name.style.backgroundColor = "rgb(233, 85, 74)";
+      name.style.width = "100%";
+      name.style.textAlign = "center";
+      name.style.color = "white";
+      name.textContent = "User : " + user + " is disconnected";
+      usersCount--;
+      availability.innerHTML =
+        usersCount == 0
+          ? "No Users are Active"
+          : usersCount + " User(s) Active";
+      locationData.appendChild(name);
+      let spacer = document.createElement("p");
+      spacer.style.height = "2px";
+      spacer.style.width = "100%";
+      spacer.textContent = "\n";
+      locationData.appendChild(spacer);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on("tracer", (user) => {
+      let name = document.createElement("p");
+      name.style.backgroundColor = "rgb(34, 169, 38)";
+      name.style.width = "100%";
+      name.style.textAlign = "center";
+      name.style.color = "white";
+      name.textContent = "User : " + user + " is active";
+      usersCount++;
+      availability.innerHTML = usersCount + " User(s) Active";
+      locationData.appendChild(name);
+      let spacer = document.createElement("p");
+      spacer.style.height = "2px";
+      spacer.style.width = "100%";
+      spacer.textContent = "\n";
+      locationData.appendChild(spacer);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on("tracerOff", (user) => {
+      let name = document.createElement("p");
+      name.style.backgroundColor = "rgb(233, 85, 74)";
+      name.style.width = "100%";
+      name.style.textAlign = "center";
+      name.style.color = "white";
+      name.textContent = "User : " + user + " is disconnected";
+      usersCount--;
+      availability.innerHTML =
+        usersCount == 0
+          ? "No Users are Active"
+          : usersCount + " User(s) Active";
+      locationData.appendChild(name);
+      let spacer = document.createElement("p");
+      spacer.style.height = "2px";
+      spacer.style.width = "100%";
+      spacer.textContent = "\n";
+      locationData.appendChild(spacer);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on("location", (location) => {
+      let locationInfo = document.createElement("p");
+      locationInfo.style.backgroundColor = "rgb(240, 181, 72)";
+      locationInfo.style.width = "100%";
+      locationInfo.style.textAlign = "center";
+      locationInfo.style.color = "white";
+      locationInfo.textContent = location;
+      locationData.appendChild(locationInfo);
+      let spacer = document.createElement("p");
+      spacer.style.height = "2px";
+      spacer.style.width = "100%";
+      spacer.textContent = "\n";
+      locationData.appendChild(spacer);
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+  </script>
+</html>
